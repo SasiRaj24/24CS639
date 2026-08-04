@@ -1,0 +1,27 @@
+def succ(state):
+    x, y = state
+    xtoy = min(x, 3 - y)
+    ytox = min(y, 4 - x)
+    return [(4, y),
+            (x, 3),
+            (0, y),
+            (x, 0),
+            (x - xtoy, y + xtoy),
+            (x + ytox, y - ytox)]
+start    = (0, 0)
+seen     = {start}
+front = [start]
+level    = 0
+while front and level < 8:
+    new = []
+    for s in front:
+        for ns in succ(s):
+            if ns not in seen:
+                seen.add(ns)
+                new.append(ns)
+                if ns[0] == 2:
+                    print("GOAL: 2L in X at level", level+1)
+    level += 1
+    print("Level", level, " ", len(new), "new states:", sorted(new))
+    front = new
+print("Total states :", len(seen))
